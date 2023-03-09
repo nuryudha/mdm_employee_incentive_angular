@@ -1,0 +1,213 @@
+<div class="container-fluid">
+  <div class="row header-title">
+    <div class="form-group row col-12">
+      <div class="input-group" class="col-sm-6">
+        <h1>Detection Deduplication Check</h1>
+      </div>
+      <div class="input-group" class="col-sm-6 pr-0">
+        <div class="text-right">
+          <button class="btn buttonColor" mat-raised-button color="primary" [mat-dialog-close]>
+            <mat-icon>clear</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <mat-card>
+        <div class="row mt-2">
+          <div class="col-12">
+            <div class="title-list">
+              <span>Detection Deduplication Check </span>
+            </div>
+          </div>
+        </div>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-4 col-lg-4 custom-label">
+                  <span>Nama Employee*:</span>
+                </div>
+                <div class="col-sm-8">
+                  <mat-form-field appearance="standard">
+                    <input [(ngModel)]="namaEmployee" oninput="this.value = this.value.toUpperCase()" appAlfabetOnly name="employeeName" matInput formControlName="employeeName"
+                      placeholder="Nama Employee">
+                    <mat-error *ngIf="form.controls.employeeName.hasError('required')">
+                      First Name is <strong>required</strong>
+                    </mat-error>
+                    <mat-error
+                      *ngIf="!form.controls.employeeName.hasError('required') && !form.controls.employeeName.valid">
+                      input <strong>invalid</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-4 col-lg-4 custom-label">
+                <mat-slide-toggle color="primary" (change)="disableDealer()">Dealer:</mat-slide-toggle>
+              </div>
+              <div class="col-sm-8">
+                <mat-form-field>
+                  <mat-select placeholder="Dealer" [(ngModel)]="dealer" [disabled]="disabledDealer">
+                    <mat-select-filter [displayMember]="'dealerName'" [array]="lisDealer"
+                      (filteredReturn)="filteredDealer =$event"></mat-select-filter>
+                    <mat-option *ngFor="let item of filteredDealer" [value]="item.dealerName">
+                      {{item.dealerName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-4 col-lg-4 custom-label">
+                <mat-slide-toggle color="primary" (change)="disableIdentitas()">Identitas:</mat-slide-toggle>
+              </div>
+              <div class="col-sm-8">
+                <mat-form-field appearance="standard">
+                  <input [disabled]="disabledIdentitas" oninput="this.value = this.value.toUpperCase()" [(ngModel)]="identitas" matInput placeholder="Identitas">
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-4 col-lg-4 custom-label">
+                <mat-slide-toggle color="primary" (change)="disableRek()">No Rekening:</mat-slide-toggle>
+              </div>
+              <div class="col-sm-8">
+                <mat-form-field appearance="standard">
+                  <input [disabled]="disabledRekening" appOnlynumber [(ngModel)]="noRek" matInput placeholder="No Rekening">
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-12 text-right">
+            <button mat-raised-button color="accent" class="button-find ps-4 pe-4"
+              (click)="detectionDeduplication()">Detection
+              Deduplication</button>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-12">
+            <div class="row justify-content-end">
+              <div class="col-md-4">
+                <mat-form-field appearance="standard">
+                  <mat-label>Search</mat-label>
+                  <input matInput placeholder="Data Employee Incentive" (keyup)="searchDedup($event)" autocomplete="off"
+                    #input>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="mat-elevation-z8">
+              <div [className]="showClass ? 'hide-overflow' : 'show-overflow'">
+                <table mat-table #sortCol1="matSort" [dataSource]="dataSource" matSort>
+
+                  <!-- Employee No Column -->
+                  <ng-container matColumnDef="employeeNo">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Employee No">
+                      Employee No </th>
+                    <td mat-cell *matCellDef="let element"> {{element.employeeNo}} </td>
+                  </ng-container>
+
+                  <!-- DLC Column -->
+                  <ng-container matColumnDef="dlc">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by DLC">
+                      DLC </th>
+                    <td mat-cell *matCellDef="let element"> {{element.dlc}} </td>
+                  </ng-container>
+
+                  <!-- Dealer Name Column -->
+                  <ng-container matColumnDef="dealerName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Dealer Name">
+                      Dealer Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.dealerName}} </td>
+                  </ng-container>
+
+                  <!-- Identitas Column -->
+                  <ng-container matColumnDef="identitas">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Identitas">
+                      Identitas </th>
+                    <td mat-cell *matCellDef="let element"> {{element.identitas}} </td>
+                  </ng-container>
+
+                  <!-- NPK Column -->
+                  <ng-container matColumnDef="npk">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by NPK"> NPK </th>
+                    <td mat-cell *matCellDef="let element"> {{element.npk}} </td>
+                  </ng-container>
+
+                  <!-- Nama Employee Column -->
+                  <ng-container matColumnDef="namaEmployee">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Nama Employee">
+                      Nama Employee
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.namaEmployee}} </td>
+                  </ng-container>
+
+                  <!-- Status Column -->
+                  <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Status">
+                      Status </th>
+                    <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+                  </ng-container>
+
+                  <!-- Cabang Creator Column -->
+                  <ng-container matColumnDef="cabangCreator">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                      sortActionDescription="Sort by Cabang Creator">
+                      Cabang Creator </th>
+                    <td mat-cell *matCellDef="let element"> {{element.cabangCreator}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="accountNo" *matCellDef="let element">
+                    {{element.accountNo}}
+                  </ng-container>
+
+                  <!-- Action Column -->
+                  <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef> Action
+                    </th>
+                    <td mat-cell *matCellDef="let element">{{element.dataId}}
+                      <button class="btn btnNoBorder" (click)="actionEdit(element)">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumnsDedup"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumnsDedup;"></tr>
+                  <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell text-center fs-5 custom-nodata-ontable" colspan="8">No Data
+                      Available!</td>
+                  </tr>
+                </table>
+                <mat-paginator #MatPaginator1 [pageSizeOptions]="[5, 10, 20, 50, 100, 250]" showFirstLastButtons
+                  aria-label="Select page">
+                </mat-paginator>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2 col-lg-2 mt-3 custom-label">
+            <button [disabled]="disabledCreate" class="btn buttonColorGreen nav-link" mat-raised-button color="primary"
+              (click)="testButtonCreate()">Create</button>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>

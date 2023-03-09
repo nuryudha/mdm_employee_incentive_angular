@@ -1,0 +1,98 @@
+<div class="container-fluid">
+    <div class="row header-title">
+        <div class="form-group row col-12">
+            <div class="input-group" class="col-sm-8">
+                <h2>UPLOAD DOCUMENT</h2>
+            </div>
+        </div>
+        <div>
+            <span id="modal1" class="close" [mat-dialog-close]>
+                <mat-icon>clear</mat-icon>
+            </span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <mat-card>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-4 custom-label">
+                                    <span>Nama Dokumen*:</span>
+                                </div>
+                                <div class="col-sm-8">
+                                    <mat-form-field appearance="standard">
+                                        <mat-label>Nama Dokumen</mat-label>
+                                        <input matInput uppercase name="NamaDokumen" formControlName="NamaDokumen">
+                                        <mat-error *ngIf="form.controls.NamaDokumen.hasError('required')">
+                                            Nama Dokumen is <strong>required</strong>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-4 custom-label">
+                                    <span>Tanggal Terima*:</span>
+                                </div>
+                                <div class="col-sm-8">
+                                    <mat-form-field color="primary" appearance="standard">
+                                        <!-- <mat-label>MM/DD/YYYY</mat-label> -->
+                                        <input matInput readonly name="terima" formControlName="terima" [matDatepicker]="picker2" (focus)="picker2.open()"
+                                         (dateInput)="addEventAwal('input', $event)" placeholder="MM/DD/YYYY">
+                                        <mat-datepicker-toggle matSuffix [for]="picker2">
+                                        </mat-datepicker-toggle>
+                                        <mat-datepicker #picker2></mat-datepicker>
+                                        <mat-error *ngIf="form.controls.terima.hasError('required')">
+                                            Tanggal Terima is <strong>required</strong>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-4 custom-label">
+                                    <span>Pilih Dokumen*:</span>
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="file" name="pilihDokumen" formControlName="pilihDokumen"
+                                        (change)="onFileSelected($event)">
+                                    <mat-error *ngIf="pilihDokumen && form.controls.pilihDokumen.hasError('required')">
+                                        Pilih Dokumen is <strong>required</strong>
+                                    </mat-error>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                </div>
+                                <div class="col-md-6 custom-label">
+                                    <span>.pdf, .jpg, .jpeg, .png</span>
+                                    <span>Max file 2MB</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3 justify-content-right">
+                        <div class="col-md-12 text-right">
+                            <button
+                                mat-raised-button color="primary" class="button-save ps-4 pe-4"
+                                type="submit">Upload
+                                Dokumen</button>&nbsp;
+                            <button
+                                mat-raised-button color="warn" class="button-cancel ps-4 pe-4"
+                                [mat-dialog-close]>Close</button>
+                        </div>
+                    </div>
+                </mat-card>
+            </form>
+        </div>
+    </div>
+</div>

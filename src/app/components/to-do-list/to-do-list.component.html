@@ -1,0 +1,170 @@
+<div class="container-fluid">
+    <div class="row header-title">
+        <div class="form-group row col-12 pt-3">
+            <h1 class="col-sm-8">To Do List</h1>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-12">
+            <mat-card>
+                <mat-tab-group [(selectedIndex)]="insentifValue">
+                    <mat-tab label="Pendaftaran">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="row justify-content-end">
+                                    <div class="col-md-4">
+                                        <mat-form-field appearance="standard">
+                                            <mat-label>Search</mat-label>
+                                            <input matInput placeholder="Data Employee Incentive"
+                                                (keyup)="searchPendaftaran($event)" autocomplete="off" #input>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="mat-elevation-z8">
+                                    <div [className]="showClass ? 'hide-overflow' : 'show-overflow'">
+                                        <table mat-table #sortCol2="matSort" [dataSource]="dataSourcePendaftaran"
+                                            matSort>
+
+                                            <!-- ID Employee Column -->
+                                            <ng-container matColumnDef="idEmployee">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                    sortActionDescription="Sort by ID Employee"> ID Employee </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.idEmployee}} </td>
+                                            </ng-container>
+
+                                            <!-- Incentive Column -->
+                                            <ng-container matColumnDef="namaEmployee">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                    sortActionDescription="Sort by Incentive"> Nama Employee</th>
+                                                <td mat-cell *matCellDef="let element"> {{element.namaEmployee}} </td>
+                                            </ng-container>
+
+                                            <!-- Tanggal Pengajuan Column -->
+                                            <ng-container matColumnDef="tanggalPengajuan">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                    sortActionDescription="Sort by Tanggal Pengajuan"> Tanggal Pengajuan
+                                                </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.tanggalPengajuan}}
+                                                </td>
+                                            </ng-container>
+
+                                            <!-- Status Column -->
+                                            <ng-container matColumnDef="status">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                    sortActionDescription="Sort by Status"> Status </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+                                            </ng-container>
+
+                                            <!-- Query Param -->
+                                            <ng-container matColumnDef="mapId" *matCellDef="let element">
+                                                {{element.mapId}}
+                                            </ng-container>
+                                            <ng-container matColumnDef="accountId" *matCellDef="let element">
+                                                {{element.accountId}}
+                                            </ng-container>
+
+                                            <!-- Action Column -->
+                                            <ng-container matColumnDef="action">
+                                                <th mat-header-cell *matHeaderCellDef> Action
+                                                </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    <mat-icon class="cursorIconEdit" (click)="ActionClickedPend(element)">edit</mat-icon>
+                                                </td>
+                                            </ng-container>
+
+                                            <tr mat-header-row *matHeaderRowDef="displayedColumnsPendaftaran"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: displayedColumnsPendaftaran;">
+                                            </tr>
+                                            <tr class="mat-row" *matNoDataRow>
+                                                <td class="mat-cell text-center fs-5 custom-nodata-ontable" colspan="8">No Data
+                                                    Available!</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <mat-paginator #MatPaginator2 [pageSizeOptions]="[5, 10, 20, 50, 100, 250]"
+                                        showFirstLastButtons aria-label="Select page">
+                                    </mat-paginator>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Insentif"> 
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="row justify-content-end">
+                                    <div class="col-md-4">
+                                        <mat-form-field appearance="standard">
+                                            <mat-label>Search</mat-label>
+                                            <input matInput placeholder="Data Employee Incentive"
+                                                (keyup)="searchInsentif($event)" autocomplete="off" #input>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="mat-elevation-z8">
+                                    <div [className]="showClass ? 'hide-overflow' : 'show-overflow'">
+                                        <table mat-table #sortCol1="matSort" [dataSource]="dataSourceInsentif"
+                                            matSort>
+
+                                            <!-- ID Employee Column -->
+                                            <ng-container matColumnDef="idEmployee">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                    sortActionDescription="Sort by ID Employee"> ID Employee </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.idEmployee}} </td>
+                                            </ng-container>
+
+                                            <!-- Incentive Column -->
+                                            <ng-container matColumnDef="namaEmployee">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                    sortActionDescription="Sort by Incentive"> Nama Employee</th>
+                                                <td mat-cell *matCellDef="let element"> {{element.namaEmployee}} </td>
+                                            </ng-container>
+
+                                            <!-- Tanggal Pengajuan Column -->
+                                            <ng-container matColumnDef="tanggalPengajuan">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                    sortActionDescription="Sort by Tanggal Pengajuan"> Tanggal Pengajuan
+                                                </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.tanggalPengajuan}}
+                                                </td>
+                                            </ng-container>
+
+                                            <!-- Status Column -->
+                                            <ng-container matColumnDef="status">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                    sortActionDescription="Sort by Status"> Status </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+                                            </ng-container>
+
+                                            <!-- Action Column -->
+                                            <ng-container matColumnDef="action">
+                                                <th mat-header-cell *matHeaderCellDef> Action
+                                                </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    <mat-icon class="cursorIconEdit" (click)="ActionClickedInsentif(element)">edit</mat-icon>
+                                                </td>
+                                            </ng-container>
+
+                                            <tr mat-header-row *matHeaderRowDef="displayedColumnsInsentif"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: displayedColumnsInsentif;">
+                                            </tr>
+                                            <tr class="mat-row" *matNoDataRow>
+                                                <td class="mat-cell text-center fs-5 custom-nodata-ontable" colspan="8">No Data
+                                                    Available!</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <mat-paginator #MatPaginator2 [pageSizeOptions]="[5, 10, 20, 50, 100, 250]"
+                                        showFirstLastButtons aria-label="Select page">
+                                    </mat-paginator>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </mat-card>
+        </div>
+    </div>
+</div>
+<ngx-spinner bdColor="rgba(255,255,255,1)" size="medium" color="#f7ad00" type="square-jelly-box" [fullScreen]="true">
+    <p style="color: black"> Loading... </p>
+</ngx-spinner>

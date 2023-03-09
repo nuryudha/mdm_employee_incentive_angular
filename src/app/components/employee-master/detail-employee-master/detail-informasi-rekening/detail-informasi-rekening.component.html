@@ -1,0 +1,302 @@
+<div class="container-fluid">
+    <div class="row header-title">
+        <div class="form-group row col-12">
+            <div class="input-group" class="col-sm-8">
+                <h2>Informasi Rekening</h2>
+            </div>
+        </div>
+        <div>
+            <span id="modal1" class="close" [mat-dialog-close]>
+                <mat-icon>clear</mat-icon>
+            </span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <mat-card>
+                <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <div class="title-list">
+                                <span>Detail Informasi Rekening </span>
+                            </div>
+                        </div>
+                    </div>
+                    <form [formGroup]="cek">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-4 col-lg-4 custom-label">
+                                        <span>Nama Employee:</span>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <mat-form-field appearance="standard">
+                                            <input name="namaEmployee" matInput formControlName="namaEmployee">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-4 custom-label">
+                                    <span>Bank Account*:</span>
+                                </div>
+                                <div class="col-sm-8">
+                                    <mat-form-field appearance="standard">
+                                        <mat-label>--Silahkan Pilih--</mat-label>
+                                        <mat-select (selectionChange)="onChange($event.value)" [(ngModel)]="bankAccount" name="bankAccount"
+                                            formControlName="bankAccount">
+                                            <mat-select-filter [displayMember]="'bankCode'" [array]="listBank"
+                                                (filteredReturn)="filteredBank =$event">
+                                            </mat-select-filter>
+                                            <mat-option *ngFor="let item of filteredBank" [value]="item.bankName">
+                                                {{item.bankCode}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="form.controls.bankAccount.hasError('required')">
+                                            Bank Account is <strong>selected</strong>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-4 custom-label">
+                                    <span>Account No*:</span>
+                                </div>
+                                <div class="col-sm-8">
+                                    <mat-form-field appearance="standard">
+                                        <input appOnlynumber name="accountNo" matInput
+                                            formControlName="accountNo">
+                                        <mat-error *ngIf="form.controls.accountNo.hasError('required')">
+                                            Account No is <strong>required</strong>
+                                        </mat-error>
+                                        <mat-error
+                                            *ngIf="!form.controls.accountNo.hasError('required') && !form.controls.accountNo.valid">
+                                            <ng-container
+                                                *ngIf="form.controls.accountNo.errors?.maxlength?.requiredLength === 15">
+                                                input <strong>invalid</strong></ng-container>
+                                            <ng-container
+                                                *ngIf="form.controls.accountNo.errors?.minlength?.requiredLength === 13 || form.controls.accountNo.errors?.maxlength?.requiredLength === 13">
+                                                Bank Mandiri input <strong>required 13 number</strong></ng-container>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-4 custom-label">
+                                    <span>Account Name*:</span>
+                                </div>
+                                <div class="col-sm-8">
+                                    <mat-form-field appearance="standard">
+                                        <input type="text" oninput="this.value = this.value.toUpperCase()" name="accountName" matInput
+                                            formControlName="accountName" appAlfabetOnly>
+                                        <mat-error *ngIf="form.controls.accountName.hasError('required')">
+                                            Account Name is <strong>required</strong>
+                                        </mat-error>
+                                        <mat-error
+                                            *ngIf="!form.controls.accountName.hasError('required') && !form.controls.accountName.valid">
+                                            input <strong>invalid</strong>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <div class="title-list">
+                                <span>Dokumen Rekening </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-4 custom-label">
+                                    <span>Nama Dokumen*:</span>
+                                </div>
+                                <div class="col-sm-8">
+                                    <mat-form-field appearance="standard">
+                                        <mat-label>--Silahkan Pilih--</mat-label>
+                                        <mat-select name="namaDokumen" formControlName="namaDokumen">
+                                            <mat-select-filter [displayMember]="'docTypeName'" [array]="listDoc"
+                                                (filteredReturn)="filteredDoc =$event">
+                                            </mat-select-filter>
+                                            <mat-option *ngFor="let item of filteredDoc" [value]="item.docTypeName">
+                                                {{item.docTypeName}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="form.controls.namaDokumen.hasError('required')">
+                                            Nama Dokumen is <strong>selected</strong>
+                                        </mat-error>
+                                        <mat-error
+                                            *ngIf="!form.controls.namaDokumen.hasError('required') && !form.controls.namaDokumen.valid">
+                                            input <strong>invalid</strong>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-4 custom-label">
+                                    <span>Tanggal Terima*:</span>
+                                </div>
+                                <div class="col-sm-8">
+                                    <mat-form-field color="primary" appearance="standard">
+                                        <!-- <mat-label>MM/DD/YYYY</mat-label> -->
+                                        <input name="tanggalTerima" matInput readonly formControlName="tanggalTerima" (focus)="picker4.open()"
+                                            [matDatepicker]="picker4" (dateInput)="addEventAwal('input', $event)" placeholder="MM/DD/YYYY">
+                                        <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker4></mat-datepicker>
+                                        <mat-error *ngIf="form.controls.tanggalTerima.hasError('required')">
+                                            Tanggal Terima is <strong>required</strong>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-4 custom-label">
+                                    <span>Pilih Dokumen*:</span>
+                                </div>
+                                <div class="col-sm-4">
+                                    <input id="docFile" type="file" name="pilihDokumen" formControlName="pilihDokumen"
+                                        (change)="onFileSelected($event)">
+                                    <mat-error *ngIf="pilihDokumen && form.controls.pilihDokumen.hasError('required')">
+                                        Pilih Dokumen is <strong>required</strong>
+                                    </mat-error>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4"></div>
+                                <div class="col-md-4 col-lg-4 custom-label">
+                                    <span>.pdf, .jpg, .jpeg, .png</span>
+                                    <span >Max file 2MB</span>
+                                </div>
+                                <div>
+                                    <mat-icon class="cursorIcon" (click)="getDokumen()">photo_album</mat-icon>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3 justify-content-right" *ngIf="this.statusAproval != 'WAITING APPROVAL 1' && this.statusAproval != 'WAITING APPROVAL 2'">
+                        <div class="col-md-12 text-right">
+                            <button [disabled]="this.data.differentCab == 'differentCab' || this.filterEmployeeStatus == 'APPROVAL' || this.accountStatus == 'AKTIF' || this.data.incentiveSystem == '1'"
+                                mat-raised-button color="primary" class="button-save ps-4 pe-4"
+                                type="submit">Save</button>&nbsp;
+                            <button
+                                mat-raised-button color="warn" class="button-cancel ps-4 pe-4"
+                                [mat-dialog-close]>Cancel</button>
+                        </div>
+                    </div>
+                </form>
+                <form [formGroup]="form" (ngSubmit)="onSubmitApprovalTwo()">
+                    <div class="row mt-2"
+                        *ngIf="this.statusAproval == 'WAITING APPROVAL 2'">
+                        <div class="col-12">
+                            <div class="title-list">
+                                <span>Approval </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row"
+                        *ngIf="this.statusAproval == 'WAITING APPROVAL 2'">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-4 custom-label">
+                                    <span>Action*:</span>
+                                </div>
+                                <div class="col-sm-8">
+                                    <mat-form-field appearance="standard">
+                                        <mat-label>--Silahkan Pilih--</mat-label>
+                                        <mat-select formControlName="filterStatusApv" name="selectStatusApv" [(ngModel)]="filterStatusApv" (click)="clickListAproval()">
+                                            <mat-option *ngFor="let selectStatusApv of selectStatusApv"
+                                                [value]="selectStatusApv.value">
+                                                {{selectStatusApv.view}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="form.controls.filterStatusApv.hasError('required')">
+                                            Action Approval is <strong>selected</strong>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row"
+                        *ngIf="this.statusAproval == 'WAITING APPROVAL 2' && filterStatusApv == 'REVISE' ">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-4 custom-label">
+                                    <span>Alasan Revise*:</span>
+                                </div>
+                                <div class="col-sm-8">
+                                    <mat-form-field appearance="standard">
+                                        <mat-label>--Silahkan Pilih--</mat-label>
+                                        <mat-select name="alasanRevise" formControlName="alasanRevise">
+                                            <mat-select-filter [displayMember]="'reviseDesc'" [array]="listRevise"
+                                                (filteredReturn)="filteredRevise =$event">
+                                            </mat-select-filter>
+                                            <mat-option *ngFor="let item of filteredRevise; let i = index"
+                                                [value]="item.reviseDesc">
+                                                {{item.reviseDesc}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="form.controls.alasanRevise.hasError('required')">
+                                            Alasan Revise is <strong>selected</strong>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row"
+                        *ngIf="this.statusAproval == 'WAITING APPROVAL 2'">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-4 custom-label">
+                                    <span>Catatan:</span>
+                                </div>
+                                <div class="col-sm-8">
+                                    <mat-form-field appearance="standard">
+                                        <mat-label>Catatan</mat-label>
+                                        <textarea oninput="this.value = this.value.toUpperCase()" name="catatan" formControlName="catatan" matInput
+                                            placeholder="Catatan..."></textarea>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3 justify-content-right" *ngIf="this.statusAproval == 'WAITING APPROVAL 2'">
+                        <div class="col-md-12 text-right">
+                            <button
+                                mat-raised-button color="primary" class="button-save ps-4 pe-4"
+                                type="submit">Save</button>&nbsp;
+                            <button
+                                mat-raised-button color="warn" class="button-cancel ps-4 pe-4"
+                                [mat-dialog-close]>Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </mat-card>
+        </div>
+    </div>
+</div>

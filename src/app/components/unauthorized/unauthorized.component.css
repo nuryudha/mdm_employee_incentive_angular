@@ -1,0 +1,22 @@
+.container-fluid{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #ffffff;
+}
+
+.not-found-gif img{
+    width: 70%;
+    height: 70%;
+}
+
+.container-fluid .row:nth-child(2) h3 {
+    font-size: 1.8em; 
+    font-weight: 100;
+}
+
+.container-fluid .row:nth-child(2) p {
+    font-size: 1.2em;
+    font-family: 'Fuzzy Bubbles', cursive;
+}

@@ -1,0 +1,226 @@
+<div class="container-fluid">
+    <div class="row header-title">
+        <div class="form-group row col-12">
+            <div class="input-group" class="col-sm-8">
+                <h2>Detail Pekerjaan & Dealer</h2>
+            </div>
+        </div>
+        <div>
+            <span id="modal1" class="close" [mat-dialog-close]>
+                <mat-icon>clear</mat-icon>
+            </span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <mat-card>
+                <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <div class="title-list">
+                                <span>Detail Informasi Pekerjaan & Dealer </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-4 custom-label">
+                                    <span>Nama Employee</span>
+                                </div>
+                                <div class="col-sm-8">
+                                    <mat-form-field appearance="standard">
+                                        <input matInput name="namaEmployee" formControlName="namaEmployee">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-4 custom-label">
+                                    <span>Pekerjaan*:</span>
+                                </div>
+                                <div class="col-sm-8">
+                                    <mat-form-field appearance="standard">
+                                        <mat-label>--Silahkan Pilih--</mat-label>
+                                        <mat-select name="filterPekerjaan" formControlName="filterPekerjaan">
+                                            <mat-select-filter [displayMember]="'jobDescription'" [array]="listJob"
+                                                (filteredReturn)="filteredJob =$event">
+                                            </mat-select-filter>
+                                            <mat-option *ngFor="let item of filteredJob" [value]="item.jobCode">
+                                                {{item.jobDescription}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="form.controls.filterPekerjaan.hasError('required')">
+                                            Pekerjaan is <strong>selected</strong>
+                                        </mat-error>
+                                        <mat-error
+                                            *ngIf="!form.controls.filterPekerjaan.hasError('required') && !form.controls.filterPekerjaan.valid">
+                                            input <strong>invalid</strong>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-4 custom-label">
+                                    <span>Dealer*:</span>
+                                </div>
+                                <div class="col-sm-8">
+                                    <mat-form-field>
+                                        <mat-label>--Silahkan Pilih--</mat-label>
+                                        <mat-select name="namaDealer" formControlName="namaDealer">
+                                            <mat-select-filter [displayMember]="'dealerName'" [array]="lisDealer"
+                                                (filteredReturn)="filteredDealer =$event"></mat-select-filter>
+                                            <mat-option *ngFor="let item of filteredDealer" [value]="item.dlc">
+                                                {{item.dealerName}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="form.controls.namaDealer.hasError('required')">
+                                            Dealer is <strong>selected</strong>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-4 custom-label">
+                                    <span>Nama Dokumen*:</span>
+                                </div>
+                                <div class="col-sm-8">
+                                    <mat-form-field appearance="standard">
+                                        <mat-label>--Silahkan Pilih--</mat-label>
+                                        <mat-select name="namaDokumen" formControlName="namaDokumen">
+                                            <mat-select-filter [displayMember]="'docTypeName'" [array]="listDoc"
+                                                (filteredReturn)="filteredDoc =$event">
+                                            </mat-select-filter>
+                                            <mat-option *ngFor="let item of filteredDoc" [value]="item.docTypeName">
+                                                {{item.docTypeName}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="form.controls.namaDokumen.hasError('required')">
+                                            Nama Dokumen is <strong>selected</strong>
+                                        </mat-error>
+                                        <mat-error
+                                            *ngIf="!form.controls.namaDokumen.hasError('required') && !form.controls.namaDokumen.valid">
+                                            input <strong>invalid</strong>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-4 custom-label">
+                                    <span>Tanggal Terima*:</span>
+                                </div>
+                                <div class="col-sm-8">
+                                    <mat-form-field color="primary" appearance="standard">
+                                        <!-- <mat-label>MM/DD/YYYY</mat-label> -->
+                                        <input name="tanggalTerima" matInput readonly formControlName="tanggalTerima" (focus)="picker4.open()"
+                                            [matDatepicker]="picker4" (dateInput)="addEventAwal('input', $event)" placeholder="MM/DD/YYYY">
+                                        <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker4></mat-datepicker>
+                                        <mat-error *ngIf="form.controls.tanggalTerima.hasError('required')">
+                                            Tanggal Terima is <strong>required</strong>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-4 custom-label">
+                                    <span>Pilih Dokumen*:</span>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input id="docFile" type="file" name="pilihDokumen" formControlName="pilihDokumen"
+                                    (change)="onFileSelected($event)"> 
+                                    <mat-error *ngIf="pilihDokumen && form.controls.pilihDokumen.hasError('required')">
+                                        Pilih Dokumen is <strong>required</strong>
+                                    </mat-error>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                </div>
+                                <div class="col-md-4 col-lg-4 custom-label">
+                                    <span>.pdf, .jpg, .jpeg, .png</span>
+                                    <span >Max file 2MB</span>
+                                </div>
+                                <div class="col-sm-0">
+                                    <mat-icon class="cursorIcon" (click)="getDokumen()">photo_album</mat-icon>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-4 custom-label">
+                                    <span>No Rekening*:</span>
+                                </div>
+                                <div class="col-sm-8">
+                                    <mat-form-field appearance="standard">
+                                        <input matInput name="noRek" formControlName="noRek">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-4 custom-label">
+                                    <span>Atas Nama*:</span>
+                                </div>
+                                <div class="col-sm-8">
+                                    <mat-form-field appearance="standard">
+                                        <input matInput name="atasNama" formControlName="atasNama">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-4 custom-label">
+                                    <span>Bank*:</span>
+                                </div>
+                                <div class="col-sm-8">
+                                    <mat-form-field appearance="standard">
+                                        <input matInput name="bank" formControlName="bank">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3 justify-content-right" *ngIf="this.statusApv != 'WAITING APPROVAL 1' && this.statusApv != 'WAITING APPROVAL 2'">
+                        <div class="col-md-12 text-right">
+                            <button [disabled]="this.data.differentCab == 'differentCab' || this.filterEmployeeStatus == 'APPROVAL' || this.data.incentiveSystem == '1'"
+                            mat-raised-button color="primary" class="button-save ps-4 pe-4"
+                                type="submit">Save</button>&nbsp;
+                            <button
+                            mat-raised-button color="warn" class="button-cancel ps-4 pe-4"
+                                [mat-dialog-close]>Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </mat-card>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,209 @@
+.header-title {
+    background-color: white;
+  }
+
+  /* header title */
+.header-title {
+  background-color: white;
+}
+
+/* filter title */
+.title-filter {
+  position: relative;
+  border-bottom: 3px solid;
+  border-bottom-color: #dcdcdc;
+}
+
+input[type='file'] {
+  color: transparent;
+}
+
+.title-filter span {
+  display: absolute;
+  font-size: 1.5em;
+  border-bottom: 3px solid;
+  border-bottom-color: #fcbd00;
+}
+.title-filter button {
+  display: absolute;
+  font-size: 1.5em;
+  border-bottom: 3px solid;
+  border-bottom-color: #fcbd00;
+}
+
+.cursorIcon {
+  cursor: pointer;
+}
+
+.cursorIconView {
+  color: #2ecc71;
+  cursor: pointer;
+}
+
+/* custom label */
+.custom-label {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.title-list {
+  position: relative;
+  border-bottom: 3px solid;
+  border-bottom-color: #dcdcdc;
+}
+
+.title-list span {
+  display: absolute;
+  font-size: 1.5em;
+  border-bottom: 3px solid;
+  border-bottom-color: #fcbd00;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.btn {
+  cursor: pointer;
+}
+
+.button-save {
+  background-color: #2e60cc;
+  letter-spacing: 0.3em;
+}
+
+.button-cancel {
+  background-color: #363837;
+  letter-spacing: 0.3em;
+}
+
+.button-find {
+  background-color: #2ecc71;
+  letter-spacing: 0.3em;
+}
+
+table {
+  width: 100%;
+  min-width: 60em;
+}
+
+::ng-deep .hide-underline .mat-form-field-underline {
+  display: none;
+}
+
+.confirm-clear-primary button {
+  margin-right: 1.5em;
+}
+
+.confirm-clear button {
+  margin-right: 1.5em;
+}
+
+.confirm-clear button:nth-child(1) {
+  background-color: #2ecc71;
+}
+
+.mat-header-cell {
+  padding-right: 0.9em;
+  font-weight: bold;
+  font-size: 1em;
+}
+.mat-cell {
+  font-size: 0.9em;
+  padding-right: 0.9em;
+}
+
+.show-overflow {
+  overflow-x: scroll;
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: #f7ad00 !important;
+}
+
+::ng-deep .mat-input-element {
+  caret-color: #f7ad00;
+}
+
+::ng-deep .mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: #f7ad00 !important;
+}
+
+.custom-nodata-ontable {
+  color: #a9a9a9;
+}
+
+/* custom spinner */
+.custom-spinner {
+  position: fixed;
+  z-index: 4;
+  top: 0;
+  left: 0;
+  background-color: white;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+
+.custom-spinner div {
+  width: 4rem;
+  height: 4rem;
+  margin: auto;
+}
+
+.empty-statdoc {
+  color: rgb(255, 85, 85);
+  font-style: italic;
+}
+
+.aliignItem {
+  float: right;
+}
+
+.mdi-icon {
+  position: absolute;
+  right: 0;
+  top: 5px;
+  cursor: pointer;
+}
+
+.tabelCenter {
+  text-align: center;
+}
+
+.cursorIconEdit {
+  color: #003d79;
+  cursor: pointer;
+}
+
+.buttonColor {
+  border-color: #2b2e2c;
+  background-color: #2b2e2c;
+}
+
+.buttonColorSave {
+  border-color: #003d79;
+  background-color: #003d79;
+}
+
+.buttonColorGreen {
+  border-color: #2ecc71;
+  background-color: #2ecc71;
+}
+
+.mat-form-field {
+  margin-right: 12px;
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
